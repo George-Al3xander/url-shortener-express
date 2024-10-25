@@ -3,10 +3,11 @@ import { inject, injectable } from "inversify";
 
 import "reflect-metadata";
 
+import { ILogger } from "@/logger";
+
+import { HTTPError, IExceptionFilter } from "@/errors";
+
 import { TYPES } from "@/constants/consts";
-import IExceptionFilter from "@/errors/exception/exception.filter.interface";
-import HTTPError from "@/errors/http-error";
-import ILogger from "@/logger/logger.interface";
 
 @injectable()
 export default class ExceptionFilter implements IExceptionFilter {

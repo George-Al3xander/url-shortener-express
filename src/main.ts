@@ -1,17 +1,21 @@
+import App from "@/app";
 import { Container, ContainerModule } from "inversify";
 
-import App from "@/app";
-import { TYPES } from "@/constants/consts";
-import ExceptionFilter from "@/errors/exception/exception.filter";
-import IExceptionFilter from "@/errors/exception/exception.filter.interface";
 import ILogger from "@/logger/logger.interface";
 import LoggerService from "@/logger/logger.service";
-import ServerEventsHandler from "@/server/server.events.handler";
-import { IServerEventsHandler } from "@/server/server.events.handler.interface";
+
 import UrlController from "@/url/controller/url.controller";
 import IUrlController from "@/url/controller/url.controller.interface";
 import UrlIdService from "@/url/id/url-id.service";
 import IServiceID from "@/url/id/url-id.service.interface";
+
+import ExceptionFilter from "@/errors/exception/exception.filter";
+import IExceptionFilter from "@/errors/exception/exception.filter.interface";
+
+import ServerEventsHandler from "@/server/server.events.handler";
+import { IServerEventsHandler } from "@/server/server.events.handler.interface";
+
+import { TYPES } from "@/constants/consts";
 
 interface IBootstrapReturn {
     app: App;

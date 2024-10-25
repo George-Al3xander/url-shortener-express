@@ -2,8 +2,10 @@ import { Router } from "express";
 import { inject, injectable } from "inversify";
 
 import { IRoute } from "@/common/routes.interface";
+
+import { ILogger } from "@/logger";
+
 import { TYPES } from "@/constants/consts";
-import ILogger from "@/logger/logger.interface";
 
 @injectable()
 export default abstract class BaseController {

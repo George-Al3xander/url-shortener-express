@@ -1,12 +1,11 @@
 import { Server } from "http";
 import { inject, injectable } from "inversify";
 
+import { ILogger } from "@/logger";
+
+import { IServerAction, IServerEventsHandler } from "@/server";
+
 import { TYPES } from "@/constants/consts";
-import ILogger from "@/logger/logger.interface";
-import {
-    IServerAction,
-    IServerEventsHandler,
-} from "@/server/server.events.handler.interface";
 
 @injectable()
 export default class ServerEventsHandler implements IServerEventsHandler {

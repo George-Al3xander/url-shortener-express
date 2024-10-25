@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import ShortUniqueId from "short-unique-id";
 
-import IServiceID from "@/urls/id/url-id.service.interface";
+import { IServiceID } from "@/url";
 
 import "reflect-metadata";
 

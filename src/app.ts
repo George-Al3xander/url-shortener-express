@@ -4,11 +4,15 @@ import { inject, injectable } from "inversify";
 
 import "reflect-metadata";
 
+import { ILogger } from "@/logger";
+
+import { IUrlController } from "@/url";
+
+import { IExceptionFilter } from "@/errors";
+
+import { IServerEventsHandler } from "@/server";
+
 import { TYPES } from "@/constants/consts";
-import IExceptionFilter from "@/errors/exception/exception.filter.interface";
-import ILogger from "@/logger/logger.interface";
-import { IServerEventsHandler } from "@/server/server.events.handler.interface";
-import IUrlController from "@/url/controller/url.controller.interface";
 
 @injectable()
 export default class App {

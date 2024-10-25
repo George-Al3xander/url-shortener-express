@@ -1,17 +1,19 @@
 import e from "express";
 import { inject, injectable } from "inversify";
 
-import BaseController from "@/common/base.controller";
+import { BaseController } from "@/common";
+
+import { ILogger } from "@/logger";
+
+import { IServiceID, IUrlController } from "@/url";
+
 import { TYPES } from "@/constants/consts";
-import ILogger from "@/logger/logger.interface";
-import IUrlController from "@/urls/controller/url.controller.interface";
 
 import "reflect-metadata";
 
 import isUrl from "is-url";
 
 import HTTPError from "@/errors/http-error";
-import IServiceID from "@/urls/id generator/url-id.service.interface";
 
 @injectable()
 export default class UrlController
