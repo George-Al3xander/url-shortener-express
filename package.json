@@ -1,0 +1,43 @@
+{
+    "name": "url-shortener-express",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/main.js",
+    "scripts": {
+        "start": "node ./dist/main.js",
+        "start:build": "pnpm build && pnpm start",
+        "dev": "nodemon",
+        "build": "pnpm lint && esbuild --bundle --platform=node ./src/main.ts --outdir=dist",
+        "lint": "eslint ./src/**",
+        "format": "pnpm exec prettier --write"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@eslint/js": "^9.13.0",
+        "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+        "@types/express": "^5.0.0",
+        "@types/is-url": "^1.2.32",
+        "@types/node": "^22.7.9",
+        "esbuild": "^0.24.0",
+        "eslint": "^9.13.0",
+        "globals": "^15.11.0",
+        "nodemon": "^3.1.7",
+        "prettier": "3.3.3",
+        "prettier-plugin-organize-imports": "^4.1.0",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.11.0"
+    },
+    "dependencies": {
+        "consola": "^3.2.3",
+        "express": "^4.21.1",
+        "inversify": "^6.0.2",
+        "is-url": "^1.2.4",
+        "reflect-metadata": "^0.2.2",
+        "short-unique-id": "^5.2.0",
+        "tslog": "3.2.0"
+    }
+}

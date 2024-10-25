@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Node 20",
+    "_version": "20.1.0",
+
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["es6"],
+        "types": ["reflect-metadata"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "rootDir": "src",
+        "outDir": "dist",
+        "strict": true,
+        "allowJs": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src"],
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    }
+}

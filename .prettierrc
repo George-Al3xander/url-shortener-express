@@ -1,0 +1,13 @@
+{
+    "plugins": [
+        "prettier-plugin-organize-imports",
+        "@ianvs/prettier-plugin-sort-imports"
+    ],
+    "importOrderParserPlugins": ["typescript", "decorators-legacy"],
+    "importOrder": ["<THIRD_PARTY_MODULES>", "", "^@/", "", "^[./]"],
+    "printWidth": 80,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "singleQuote": false,
+    "semi": true
+}
