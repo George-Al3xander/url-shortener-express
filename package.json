@@ -7,7 +7,8 @@
         "start": "node ./dist/main.js",
         "start:build": "pnpm build && pnpm start",
         "dev": "nodemon",
-        "build": "pnpm lint && esbuild --bundle --platform=node ./src/main.ts --outdir=dist",
+        "build": "tsc && tsc-alias",
+        "build:esbuild": "pnpm lint && esbuild --bundle --platform=node ./src/main.ts --outdir=dist",
         "lint": "eslint ./src/**",
         "format": "pnpm exec prettier --write"
     },
@@ -27,13 +28,18 @@
         "prettier": "3.3.3",
         "prettier-plugin-organize-imports": "^4.1.0",
         "ts-node": "^10.9.2",
+        "tsc-alias": "^1.8.10",
         "tsconfig-paths": "^4.2.0",
         "typescript": "^5.6.3",
         "typescript-eslint": "^8.11.0"
     },
     "dependencies": {
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.1",
         "consola": "^3.2.3",
+        "dotenv": "^16.4.5",
         "express": "^4.21.1",
+        "firebase": "^11.0.1",
         "inversify": "^6.0.2",
         "is-url": "^1.2.4",
         "reflect-metadata": "^0.2.2",
