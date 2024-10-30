@@ -1,19 +1,21 @@
-import e from "express";
+import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 
 import { BaseController } from "@/common";
 
 import { ILogger } from "@/logger";
 
-import { IServiceID, IUrlController } from "@/url";
+import { IUrlController, IUrlRepository, IUrlService, UrlDto } from "@/url";
 
 import { TYPES } from "@/constants/consts";
 
 import "reflect-metadata";
 
-import isUrl from "is-url";
+import { ValidateMiddleware } from "@/common/validate.middleware";
 
-import HTTPError from "@/errors/http-error";
+import { IConfigService } from "@/config";
+
+import { HTTPError } from "@/errors";
 
 @injectable()
 export default class UrlController
@@ -22,42 +24,53 @@ export default class UrlController
 {
     constructor(
         @inject(TYPES.Logger) private loggerService: ILogger,
-        @inject(TYPES.IdService) private idService: IServiceID,
+        @inject(TYPES.UrlService) private urlService: IUrlService,
+        @inject(TYPES.ConfigService) private configService: IConfigService,
+        @inject(TYPES.UrlRepository) private urlRepository: IUrlRepository,
     ) {
         super(loggerService);
         this.bindRoutes([
-            { path: "/", method: "get", func: this.redirectById },
-            { path: "/", method: "post", func: this.generateId },
+            { path: "/:id", method: "get", func: this.redirectById },
+            {
+                path: "/",
+                method: "post",
+                func: this.generateId,
+                middlewares: [new ValidateMiddleware(UrlDto)],
+            },
         ]);
     }
 
-    generateId(req: e.Request, res: e.Response, next: e.NextFunction): void {
-        const url = req.body.url;
+    async generateId(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
+        const url = await this.urlRepository.create(req.body.url);
         if (url) {
-            if (isUrl(url)) {
-                res.status(201).json({
-                    url,
-                    shortId: this.idService.generate(),
-                });
-            } else {
-                next(
-                    new HTTPError(
-                        422,
-                        "The provided URL is invalid!",
-                        "shortener",
-                    ),
-                );
-            }
+            res.status(201).json({
+                shorten_id: url.shorten_id,
+                original_url: url.original_url,
+            });
         } else {
-            next(new HTTPError(400, "No URL provided!"));
+            next(new HTTPError(409, "Failed to shorten the URL"));
         }
     }
 
-    redirectById(
-        _req: e.Request,
-        res: e.Response,
-        _next: e.NextFunction,
-    ): void {
-        res.send("redirect");
+    async redirectById(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
+        const url = await this.urlRepository.find(req.params.id);
+        if (url) {
+            res.redirect(url.original_url);
+        } else {
+            next(
+                new HTTPError(
+                    404,
+                    "Unable to find the URL associated with the provided shortened ID.",
+                ),
+            );
+        }
     }
 }

@@ -1,14 +1,21 @@
-import App from "@/app";
 import { Container, ContainerModule } from "inversify";
 
+import App from "@/app";
+
+import { ConfigService, IConfigService } from "@/config";
+
 import { ILogger, LoggerService } from "@/logger";
+
+import { DatabaseService, IDatabaseService } from "@/db";
 
 import {
     IServiceID,
     IUrlController,
+    IUrlRepository,
     IUrlService,
     UrlController,
     UrlIdService,
+    UrlRepository,
     UrlService,
 } from "@/url";
 
@@ -16,7 +23,6 @@ import { ExceptionFilter, IExceptionFilter } from "@/errors";
 
 import { IServerEventsHandler, ServerEventsHandler } from "@/server";
 
-import { ConfigService, IConfigService } from "@/config";
 import { TYPES } from "@/constants/consts";
 
 interface IBootstrapReturn {
@@ -39,6 +45,12 @@ export const appBindings = new ContainerModule((bind) => {
     bind<IServiceID>(TYPES.IdService).to(UrlIdService).inSingletonScope();
     bind<IConfigService>(TYPES.ConfigService)
         .to(ConfigService)
+        .inSingletonScope();
+    bind<IDatabaseService>(TYPES.DatabaseService)
+        .to(DatabaseService)
+        .inSingletonScope();
+    bind<IUrlRepository>(TYPES.UrlRepository)
+        .to(UrlRepository)
         .inSingletonScope();
     bind<App>(TYPES.Application).to(App);
 });

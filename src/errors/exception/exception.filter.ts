@@ -22,10 +22,12 @@ export default class ExceptionFilter implements IExceptionFilter {
             this.logger.error(
                 `[${exception.context || exception.constructor.name}] Error ${exception.statusCode}: ${exception.message}`,
             );
-            res.status(exception.statusCode).send({ error: exception.message });
+            res.status(exception.statusCode).send({
+                message: exception.message,
+            });
         } else {
             this.logger.error(exception.message);
-            res.status(500).send({ error: exception.message });
+            res.status(500).send({ message: exception.message });
         }
     }
 }

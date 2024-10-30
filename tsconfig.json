@@ -4,11 +4,11 @@
     "_version": "20.1.0",
 
     "compilerOptions": {
-        "target": "es5",
-        "lib": ["es6"],
+        "lib": ["es2023"],
+        "module": "node16",
+        "target": "es2022",
         "types": ["reflect-metadata"],
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "moduleResolution": "node16",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "rootDir": "src",
@@ -17,8 +17,7 @@
         "allowJs": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
-
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"]
         }

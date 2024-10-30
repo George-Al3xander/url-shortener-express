@@ -4,5 +4,18 @@ export const TYPES = {
     ExceptionFilter: Symbol.for("ExceptionFilter"),
     ServerEventsHandler: Symbol.for("ServerEventsHandler"),
     UrlController: Symbol.for("UrlController"),
+    UrlService: Symbol.for("UrlService"),
     IdService: Symbol.for("IdService"),
+    ConfigService: Symbol.for("ConfigService"),
+    DatabaseService: Symbol.for("DatabaseService"),
+    UrlRepository: Symbol.for("UrlRepository"),
 };
+
+export const DB_ENV_KEYS = [
+    "apiKey",
+    "authDomain",
+    "projectId",
+    "storageBucket",
+    "messagingSenderId",
+    "appId",
+];
