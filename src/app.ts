@@ -1,5 +1,5 @@
-import { Server } from "http";
 import express, { Express } from "express";
+import { Server } from "http";
 import { inject, injectable } from "inversify";
 
 import "reflect-metadata";
@@ -12,6 +12,7 @@ import { IExceptionFilter } from "@/errors";
 
 import { IServerEventsHandler } from "@/server";
 
+import { IConfigService } from "@/config";
 import { TYPES } from "@/constants/consts";
 
 @injectable()
@@ -26,6 +27,8 @@ export default class App {
         @inject(TYPES.UrlController) private urlController: IUrlController,
         @inject(TYPES.ServerEventsHandler)
         private serverEventsHandler: IServerEventsHandler,
+        @inject(TYPES.ConfigService)
+        private configService: IConfigService,
     ) {
         this.app = express();
         this.port = 8000;

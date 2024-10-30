@@ -1,20 +1,22 @@
 import App from "@/app";
 import { Container, ContainerModule } from "inversify";
 
-import ILogger from "@/logger/logger.interface";
-import LoggerService from "@/logger/logger.service";
+import { ILogger, LoggerService } from "@/logger";
 
-import UrlController from "@/url/controller/url.controller";
-import IUrlController from "@/url/controller/url.controller.interface";
-import UrlIdService from "@/url/id/url-id.service";
-import IServiceID from "@/url/id/url-id.service.interface";
+import {
+    IServiceID,
+    IUrlController,
+    IUrlService,
+    UrlController,
+    UrlIdService,
+    UrlService,
+} from "@/url";
 
-import ExceptionFilter from "@/errors/exception/exception.filter";
-import IExceptionFilter from "@/errors/exception/exception.filter.interface";
+import { ExceptionFilter, IExceptionFilter } from "@/errors";
 
-import ServerEventsHandler from "@/server/server.events.handler";
-import { IServerEventsHandler } from "@/server/server.events.handler.interface";
+import { IServerEventsHandler, ServerEventsHandler } from "@/server";
 
+import { ConfigService, IConfigService } from "@/config";
 import { TYPES } from "@/constants/consts";
 
 interface IBootstrapReturn {
@@ -23,13 +25,21 @@ interface IBootstrapReturn {
 }
 
 export const appBindings = new ContainerModule((bind) => {
-    bind<ILogger>(TYPES.Logger).to(LoggerService);
-    bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
+    bind<ILogger>(TYPES.Logger).to(LoggerService).inSingletonScope();
+    bind<IExceptionFilter>(TYPES.ExceptionFilter)
+        .to(ExceptionFilter)
+        .inSingletonScope();
     bind<IServerEventsHandler>(TYPES.ServerEventsHandler).to(
         ServerEventsHandler,
     );
-    bind<IUrlController>(TYPES.UrlController).to(UrlController);
-    bind<IServiceID>(TYPES.IdService).to(UrlIdService);
+    bind<IUrlController>(TYPES.UrlController)
+        .to(UrlController)
+        .inSingletonScope();
+    bind<IUrlService>(TYPES.UrlService).to(UrlService).inSingletonScope();
+    bind<IServiceID>(TYPES.IdService).to(UrlIdService).inSingletonScope();
+    bind<IConfigService>(TYPES.ConfigService)
+        .to(ConfigService)
+        .inSingletonScope();
     bind<App>(TYPES.Application).to(App);
 });
 
