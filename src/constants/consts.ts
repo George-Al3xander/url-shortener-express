@@ -12,10 +12,10 @@ export const TYPES = {
 };
 
 export const DB_ENV_KEYS = [
-    "apiKey",
-    "authDomain",
-    "projectId",
-    "storageBucket",
-    "messagingSenderId",
-    "appId",
+    "API_KEY",
+    "AUTH_DOMAIN",
+    "PROJECT_ID",
+    "STORAGE_BUCKET",
+    "MESSAGING_SENDER_ID",
+    "APP_ID",
 ];

@@ -5,7 +5,7 @@ import { BaseController } from "@/common";
 
 import { ILogger } from "@/logger";
 
-import { IUrlController, IUrlRepository, IUrlService, UrlDto } from "@/url";
+import { IUrlController, IUrlRepository, UrlDto } from "@/url";
 
 import { TYPES } from "@/constants/consts";
 
@@ -24,7 +24,6 @@ export default class UrlController
 {
     constructor(
         @inject(TYPES.Logger) private loggerService: ILogger,
-        @inject(TYPES.UrlService) private urlService: IUrlService,
         @inject(TYPES.ConfigService) private configService: IConfigService,
         @inject(TYPES.UrlRepository) private urlRepository: IUrlRepository,
     ) {
@@ -65,12 +64,17 @@ export default class UrlController
         if (url) {
             res.redirect(url.original_url);
         } else {
-            next(
-                new HTTPError(
-                    404,
-                    "Unable to find the URL associated with the provided shortened ID.",
-                ),
-            );
+            const redirectUrl = this.configService.get("REDIRECT_URL");
+            if (redirectUrl) {
+                res.redirect(redirectUrl);
+            } else {
+                next(
+                    new HTTPError(
+                        404,
+                        "Unable to find the URL associated with the provided shortened ID.",
+                    ),
+                );
+            }
         }
     }
 }

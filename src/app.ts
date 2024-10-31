@@ -4,8 +4,6 @@ import { inject, injectable } from "inversify";
 
 import "reflect-metadata";
 
-import { ILogger } from "@/logger";
-
 import { IUrlController } from "@/url";
 
 import { IExceptionFilter } from "@/errors";
@@ -20,7 +18,6 @@ export default class App {
     server!: Server;
     port: number;
     constructor(
-        @inject(TYPES.Logger) private logger: ILogger,
         @inject(TYPES.ExceptionFilter)
         private exceptionFilter: IExceptionFilter,
         @inject(TYPES.UrlController) private urlController: IUrlController,

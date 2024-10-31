@@ -8,6 +8,8 @@ import { ILogger } from "@/logger";
 
 import { IDatabaseService } from "@/db";
 
+import { convertSnakeToCamel } from "@/lib/utils";
+
 import { DB_ENV_KEYS, TYPES } from "@/constants/consts";
 
 @injectable()
@@ -19,7 +21,7 @@ export class DatabaseService implements IDatabaseService {
         @inject(TYPES.ConfigService) private configService: IConfigService,
     ) {
         const config = DB_ENV_KEYS.map((key) => [
-            key,
+            convertSnakeToCamel(key),
             this.configService.get(key),
         ]);
         this.config = Object.fromEntries(config);
