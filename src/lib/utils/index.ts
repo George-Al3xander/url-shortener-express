@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export const convertSnakeToCamel = (key: string): string => {
     const split = key.split("_");
     return (
@@ -8,3 +10,9 @@ export const convertSnakeToCamel = (key: string): string => {
             .join("")
     );
 };
+
+export const getCurrentURL = ({
+    protocol,
+    hostname,
+    socket: { localPort },
+}: Request): string => `${protocol}://${hostname}:${localPort}`;

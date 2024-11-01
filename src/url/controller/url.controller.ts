@@ -17,6 +17,8 @@ import { IConfigService } from "@/config";
 
 import { HTTPError } from "@/errors";
 
+import { getCurrentURL } from "@/lib/utils";
+
 @injectable()
 export default class UrlController
     extends BaseController
@@ -46,9 +48,11 @@ export default class UrlController
     ): Promise<void> {
         const url = await this.urlRepository.create(req.body.url);
         if (url) {
+            const redirect_url = new URL(getCurrentURL(req));
+            redirect_url.pathname = url.shortened_id;
             res.status(201).json({
-                shorten_id: url.shorten_id,
                 original_url: url.original_url,
+                redirect_url,
             });
         } else {
             next(new HTTPError(409, "Failed to shorten the URL"));
@@ -64,7 +68,7 @@ export default class UrlController
         if (url) {
             res.redirect(url.original_url);
         } else {
-            const redirectUrl = this.configService.get("REDIRECT_URL");
+            const redirectUrl = this.configService.get("404_REDIRECT_URL");
             if (redirectUrl) {
                 res.redirect(redirectUrl);
             } else {
