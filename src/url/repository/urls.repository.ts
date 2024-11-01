@@ -20,18 +20,16 @@ export class UrlRepository implements IUrlRepository {
     async create(url: string): Promise<UrlEntity | undefined> {
         const db = this.dbService.db;
         const newUrl = new UrlEntity(url, this.idService);
-        const { shorten_id, original_url } = newUrl;
+        const { shortened_id, original_url } = newUrl;
         try {
-            const docRef = doc(db, "urls", shorten_id);
+            const docRef = doc(db, "urls", shortened_id);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
                 console.log("Document data:", docSnap.data());
             } else {
-                // docSnap.data() will be undefined in this case
-
-                await setDoc(doc(db, "urls", shorten_id), {
-                    shorten_id,
+                await setDoc(doc(db, "urls", shortened_id), {
+                    shortened_id,
                     original_url,
                 });
                 return newUrl;

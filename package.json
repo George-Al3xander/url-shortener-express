@@ -10,7 +10,8 @@
         "build": "tsc && tsc-alias",
         "build:esbuild": "pnpm lint && esbuild --bundle --platform=node ./src/main.ts --outdir=dist",
         "lint": "eslint ./src/**",
-        "format": "pnpm exec prettier --write"
+        "format": "pnpm exec prettier --write",
+        "push": "pnpm lint && pnpm build && git push -u origin main"
     },
     "keywords": [],
     "author": "",
