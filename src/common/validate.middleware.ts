@@ -4,6 +4,8 @@ import e from "express";
 
 import { IMiddleware } from "@/common";
 
+import { simplifyValidationErrs } from "@/lib/utils";
+
 export class ValidateMiddleware implements IMiddleware {
     constructor(private classToValidate: ClassConstructor<object>) {}
 
@@ -12,7 +14,7 @@ export class ValidateMiddleware implements IMiddleware {
 
         validate(instance).then((errs) => {
             if (errs.length > 0) {
-                res.status(500).send(errs);
+                res.status(500).send(simplifyValidationErrs(errs));
             } else {
                 next();
             }

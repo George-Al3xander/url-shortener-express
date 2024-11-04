@@ -47,7 +47,6 @@ export class UrlRepository implements IUrlRepository {
         try {
             const docRef = doc(db, "urls", id);
             const docSnap = await getDoc(docRef);
-
             if (docSnap.exists()) {
                 return docSnap.data() as UrlEntity;
             }

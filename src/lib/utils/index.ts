@@ -1,3 +1,4 @@
+import { ValidationError } from "class-validator";
 import { Request } from "express";
 
 export const convertSnakeToCamel = (key: string): string => {
@@ -16,3 +17,15 @@ export const getCurrentURL = ({
     hostname,
     socket: { localPort },
 }: Request): string => `${protocol}://${hostname}:${localPort}`;
+
+export const simplifyValidationErrs = (
+    validationErrors: ValidationError[],
+): { message: string } => {
+    const errObj = validationErrors[0];
+
+    if (!errObj.constraints) return { message: "Something went wrong" };
+    else {
+        const firstKey = Object.keys(errObj.constraints)[0];
+        return { message: errObj.constraints[firstKey] };
+    }
+};

@@ -1,4 +1,5 @@
 import { Server } from "http";
+import cors from "cors";
 import express, { Express } from "express";
 import { inject, injectable } from "inversify";
 
@@ -38,6 +39,7 @@ export default class App {
 
     public useMiddleware(): void {
         this.app.use(express.json());
+        this.app.use(cors());
     }
 
     public useServerHandlers(): void {
