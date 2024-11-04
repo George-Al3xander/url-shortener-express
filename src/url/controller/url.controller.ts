@@ -11,6 +11,7 @@ import { TYPES } from "@/constants/consts";
 
 import "reflect-metadata";
 
+import { SecretMiddleware } from "@/common/secret.middleware";
 import { ValidateMiddleware } from "@/common/validate.middleware";
 
 import { IConfigService } from "@/config";
@@ -36,7 +37,13 @@ export default class UrlController
                 path: "/",
                 method: "post",
                 func: this.generateId,
-                middlewares: [new ValidateMiddleware(UrlDto)],
+                middlewares: [
+                    new SecretMiddleware(
+                        this.loggerService,
+                        this.configService,
+                    ),
+                    new ValidateMiddleware(UrlDto),
+                ],
             },
         ]);
     }
