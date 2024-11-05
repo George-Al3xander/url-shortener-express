@@ -71,18 +71,21 @@ export default class UrlController
         res: Response,
         next: NextFunction,
     ): Promise<void> {
-        const url = await this.urlRepository.find(req.params.id);
+        const { id } = req.params;
+        const url = await this.urlRepository.find(id);
         if (url) {
             res.redirect(url.original_url);
         } else {
-            const redirectUrl = this.configService.get("404_REDIRECT_URL");
-            if (redirectUrl) {
-                res.redirect(redirectUrl);
+            const redirectUrlBase = this.configService.get("404_REDIRECT_URL");
+            if (redirectUrlBase) {
+                const redirectUrl = new URL(redirectUrlBase);
+                redirectUrl.pathname = `${redirectUrl.pathname}/${id}`;
+                res.redirect(redirectUrl.toString());
             } else {
                 next(
                     new HTTPError(
                         404,
-                        "Unable to find the URL associated with the provided shortened ID.",
+                        `Unable to find the URL associated with the provided shortened ID: ${id}`,
                     ),
                 );
             }
