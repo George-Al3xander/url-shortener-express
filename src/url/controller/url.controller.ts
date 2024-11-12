@@ -76,7 +76,9 @@ export default class UrlController
         if (url) {
             res.redirect(url.original_url);
         } else {
-            const redirectUrlBase = this.configService.get("404_REDIRECT_URL");
+            const redirectUrlBase = this.configService.get(
+                "NOT_FOUND_REDIRECT_URL",
+            );
             if (redirectUrlBase) {
                 const redirectUrl = new URL(redirectUrlBase);
                 redirectUrl.pathname = `${redirectUrl.pathname}/${id}`;
