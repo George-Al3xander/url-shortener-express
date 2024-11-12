@@ -1,20 +1,27 @@
-import { IConfigService } from "@/config/config.service.interface";
-import { TYPES } from "@/constants/consts";
-import { config, DotenvConfigOutput, DotenvParseOutput } from "dotenv";
+import { config } from "dotenv";
 import { inject, injectable } from "inversify";
 import { Logger } from "tslog";
 
+import { IConfigService } from "@/config/config.service.interface";
+
+import { TYPES } from "@/constants/consts";
+
+config();
+
 @injectable()
 export class ConfigService implements IConfigService {
-    private config!: DotenvParseOutput;
+    private readonly config!: NodeJS.ProcessEnv;
 
     constructor(@inject(TYPES.Logger) private readonly logger: Logger) {
-        const { error, parsed }: DotenvConfigOutput = config();
-        if (error) {
-            this.logger.error(`Failed to read environment file!`);
-        } else {
-            this.logger.info("Environment file successfully read!");
-            this.config = parsed as DotenvParseOutput;
+        try {
+            this.config = process.env;
+            this.logger.info(
+                "[ConfigService] Environment file successfully read!",
+            );
+        } catch (_e) {
+            this.logger.error(
+                `[ConfigService] Failed to read environment file!`,
+            );
         }
     }
 
